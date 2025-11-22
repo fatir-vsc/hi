@@ -1,0 +1,78 @@
+import discord
+import random
+import time as t
+import os
+import asyncio
+from discord.ext import commands
+import requests
+
+dictt = {"info" : "a command for another command info",
+         "hello" : "a simple hello command",
+         "heh" : "a command that says he multiple times",
+         "password" : "a command that generates a random password",
+         "joined" : "a command that tells you when a member joined",
+         "roll" : "a command that rolls dice in NdN format",
+         "reaction" : "a command that tests your reaction time(type 'stop' as fast as you can when prompted)"}
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='-', intents=intents)
+
+# Replace with your actual channel ID
+CHANNEL_ID = 123456789012345678
+
+@bot.event
+async def on_ready():
+    print(f'We have logged in as {bot.user}')
+
+@bot.command()
+async def mem(ctx):
+    img_name = random.choice(os.listdir('image'))
+    # Dan inilah cara Kamu mengganti nama file dari variabel!
+    with open(f'image/{img_name}', 'rb') as f:
+            picture = discord.File(f)
+   # Kita kemudian dapat mengirim file ini sebagai tolok ukur!
+    await ctx.send(file=picture)
+
+@bot.command()
+async def all_in(ctx):
+    img_name = random.choice(os.listdir('image'))
+    # Dan inilah cara Kamu mengganti nama file dari variabel!
+    with open('images/Screenshot 2025-11-22 060533.png', 'rb') as f:
+            picture = discord.File(f)
+   # Kita kemudian dapat mengirim file ini sebagai tolok ukur!
+    await ctx.send(file=picture)
+
+@bot.command()
+async def KABOOM(ctx):
+    img_name = random.choice(os.listdir('image'))
+    # Dan inilah cara Kamu mengganti nama file dari variabel!
+    with open('images/Screenshot 2025-11-22 060855.png', 'rb') as f:
+            picture = discord.File(f)
+   # Kita kemudian dapat mengirim file ini sebagai tolok ukur!
+    await ctx.send(file=picture)
+
+@bot.command()
+async def nest(ctx):
+    img_name = random.choice(os.listdir('image'))
+    # Dan inilah cara Kamu mengganti nama file dari variabel!
+    with open('images/Screenshot 2025-11-22 061000.png', 'rb') as f:
+            picture = discord.File(f)
+   # Kita kemudian dapat mengirim file ini sebagai tolok ukur!
+    await ctx.send(file=picture)
+
+def get_duck_image_url():    
+    url = 'https://random-d.uk/api/random'
+    res = requests.get(url)
+    data = res.json()
+    return data['url']
+
+
+@bot.command('duck')
+async def duck(ctx):
+    '''Setelah kita memanggil perintah bebek (duck), program akan memanggil fungsi get_duck_image_url'''
+    image_url = get_duck_image_url()
+    await ctx.send(image_url)
+        
+bot.run("ur token")
